@@ -3,39 +3,43 @@
 // import Router from 'vue-router';
 
 import home from './components/home.vue';
-import taskslist from './components/taskslist.vue';
-import userslist from './components/userslist.vue';
-import updatetask from './components/updateTask.vue';
-import deletetask from './components/deleteTask.vue';
-import updateuser from './components/updateUser.vue';
-import deleteuser from './components/deleteUser.vue';
+import signup from './components/signup.vue';
+
+import login from './components/login.vue';
+import newquestion from './components/newquestion.vue';
+import questioninfo from './components/questioninfo.vue';
+import questiondelete from './components/deleteQuestion.vue';
+
+import answer from './components/answer.vue';
 
 export default [{
     path: '/',
     component: home,
   },
   {
-    path: '/taskslist',
-    component: taskslist,
+    path: '/signup',
+    component: signup,
   },
   {
-    path: '/updatetask/:id',
-    component: updatetask,
+    path: '/login',
+    component: login,
   },
   {
-    path: '/deletetask/:id',
-    component: deletetask,
+    path: '/newquestion',
+    component: newquestion,
   },
   {
-    path: '/userslist',
-    component: userslist,
+    path: '/questioninfo/:id',
+    component: questioninfo,
   },
   {
-    path: '/updateuser/:id',
-    component: updateuser,
+    path: '/deletequestion/:id',
+    component: questiondelete,
   },
   {
-    path: '/deleteuser/:id',
-    component: deleteuser,
+    path: '/answers/:id',
+    component: answer,
   },
+
+
 ];

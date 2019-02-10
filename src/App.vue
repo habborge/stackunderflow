@@ -10,8 +10,14 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <router-link to="/" class="nav-item nav-link">Home</router-link>
-            <router-link to="/taskslist" class="nav-item nav-link">Tasks</router-link>
-            <router-link to="/userslist" class="nav-item nav-link">Users</router-link>
+            <div v-if="token_key">
+              <router-link to="/newquestion" class="nav-item nav-link">New Question</router-link>
+              <a class="nav-item nav-link mouse-hand" @click="logout">Log Out</a>
+            </div>
+            <div v-else>
+              <router-link to="/login" class="nav-item nav-link">Login</router-link>
+              <router-link to="/signup" class="nav-item nav-link">Sign Up</router-link>
+            </div>
           </div>
         </div>
       </nav>
@@ -24,7 +30,24 @@
 
 <script>
 export default {
-  name: "app"
+  name: "app",
+  props: {
+    msg: String,
+    tokem_key: String
+  },
+  data() {
+    return {
+      token_key: localStorage.getItem("token")
+    };
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("myUser");
+      localStorage.removeItem("token");
+      this.$router.push({ path: "/login" });
+      //this.router.push("http://localhost:8080/#/");
+    }
+  }
 };
 </script>
 
@@ -46,5 +69,8 @@ export default {
 }
 #app_second {
   padding: 25px;
+}
+.mouse-hand {
+  cursor: pointer;
 }
 </style>

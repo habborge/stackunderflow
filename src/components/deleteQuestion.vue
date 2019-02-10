@@ -4,7 +4,8 @@
       <div class="row">
         <div class="ancho" v-if="items">
           <div class="alert alert-success" role="alert">{{items}}</div>
-          <router-link to="/taskslist" class="btn btn-primary">Back to Tasks</router-link>
+          <router-link to="/" class="btn btn-primary">Go to Log in</router-link>
+          <router-link to="/" class="btn btn-danger">Back to Questions</router-link>
         </div>
       </div>
     </div>
@@ -25,18 +26,20 @@ export default {
   created() {
     const urlvar = this.$route.params.id;
     // console.log(urlvar);
-    fetch("http://localhost:3000/api/tasks/" + this.$route.params.id, {
+    fetch("http://localhost:3000/api/questions/" + this.$route.params.id, {
       method: "DELETE",
       body: JSON.stringify(),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: window.localStorage.getItem("token")
       }
     })
       .then(response => {
         return response.json();
       })
       .then(data => {
-        this.items = "Task was deleted succesfully";
+        console.log(data);
+        this.items = "Question was deleted succesfully";
       });
   }
 };

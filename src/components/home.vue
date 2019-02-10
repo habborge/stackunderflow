@@ -4,24 +4,56 @@
       <div class="row">
         <div>
           <div class="text-title">
-            <h1>Project Special Topics I</h1>
+            <h1>STACKUNDERFLOW</h1>
           </div>
-          <div class="texto">
-            <p>This front-end project is done with VueJs that connects to a back-end RESP-API developed in nodeJS
-              <br>GIT repository:
-            </p>
-            <div class="alert alert-success" role="alert">
-              <h4 class="alert-heading">OBS:</h4>
-              <p>Do not forget that nodeJS API there is not in this project. You must clone the other repository.</p>
-              <hr>
-              <p class="mb-0">
-                <b>NodeJS GIT repository:</b> https://github.com/habborge/taller01.git
-              </p>
-            </div>
-            <div>
-              <p>Also, this project use Vue Router module as dependence. this routes are available on menu bar.
-                <br>you could use this project to manage tasks and users.
-              </p>
+          <div class="text-title">
+            <h3>QUESTION</h3>
+          </div>
+          <div class="post__container">
+            <div class="card-body" v-for="item in items" :key="item._id">
+              <div>
+                <div class="row">
+                  <div class="col-sm-8">
+                    <h5 class="card-title">Question</h5>
+                    <h6 class="card-subtitle mb-2">
+                      <b>Created at:</b>
+                      {{item.createdAt}}
+                    </h6>
+                    <p class="card-text">
+                      <b>Description:</b>
+                      {{item.question}}
+                      <br>
+                      <b>Author:</b>
+                      {{item.author}}
+                    </p>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div v-if="myId == item.authorId">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <router-link
+                            v-bind:to="'/questioninfo/'+item._id"
+                            class="btn btn-success"
+                          >Update</router-link>
+                        </div>
+                        <div class="col-sm-6">
+                          <router-link
+                            v-bind:to="'/deletequestion/'+item._id"
+                            class="btn btn-danger"
+                          >Delete</router-link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-if="token_key">
+                    <router-link v-bind:to="'/answers/'+item._id" class="btn btn-primary">Answer</router-link>
+                  </div>
+                  <div v-else>
+                    <router-link to="/login" class="btn btn-primary">Answer</router-link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -34,7 +66,58 @@
 export default {
   name: "Home",
   props: {
-    msg: String
+    _id: {
+      type: String,
+      required: true
+    },
+    question: {
+      type: String,
+      default: ""
+    },
+    author: {
+      type: String,
+      required: true
+    },
+
+    createdAt: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      token_key: localStorage.getItem("token"),
+      loading: true,
+      items: []
+    };
+  },
+  created() {
+    fetch("http://localhost:3000/api/questions")
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        const { items = [] } = data;
+        const questions = items.map(item => {
+          const { userId = {} } = item;
+          const { firstname = "Anonimo", lastname = "" } = userId;
+          return {
+            _id: item._id,
+            question: item.text,
+            authorId: item.userId._id,
+            author: `${item.userId.firstname} ${item.userId.lastname}`,
+            createdAt: item.createdAt
+          };
+        });
+        this.items = questions;
+        console.log(this.items);
+        this.loading = false;
+      });
+  },
+  computed: {
+    myId: function() {
+      return window.localStorage.getItem("myUser");
+    }
   }
 };
 </script>
