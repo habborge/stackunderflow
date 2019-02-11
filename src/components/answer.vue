@@ -1,45 +1,48 @@
 <template>
   <div class="post__container">
     <div class="row">
+      {{items}}
       <div class="card-body" v-for="item in items" :key="item._id">
-        <div class="line-bottom">
-          <span>
-            <h6 class="card-subtitle mb-2">
-              <b>QUESTION</b>
-              <br>
-              <span class="color-date">
-                <b>Asked:</b>
-                {{item.createdAt}}
+        <div v-if="question_id == item._id">
+          <div class="line-bottom">
+            <span>
+              <h6 class="card-subtitle mb-2">
+                <b>QUESTION</b>
                 <br>
-                <b>Author:</b>
-                {{item.author}}
-              </span>
-            </h6>
-            <h1 class="card-title">{{item.question}}</h1>
-          </span>
-        </div>
-        <div>
-          <span>
-            <div>
-              <div class="line-bottom2" v-for="comment in item.comments" :key="comment._id">
-                <div class="line-bottom">
-                  <h4>
-                    <b>Answer:</b>
-                  </h4>
-                  {{comment.text}}
-                </div>
-                <div class="postion-text">
-                  <h6 class="color-date">
-                    <b>Answered On:</b>
-                    {{comment.createdAt}}
-                    <br>
-                    <b>Answered By:</b>
-                    {{comment.userId.firstname}} {{comment.userId.lastname}}
-                  </h6>
+                <span class="color-date">
+                  <b>Asked:</b>
+                  {{item.createdAt}}
+                  <br>
+                  <b>Author:</b>
+                  {{item.author}}
+                </span>
+              </h6>
+              <h1 class="card-title">{{item.question}}</h1>
+            </span>
+          </div>
+          <div>
+            <span>
+              <div>
+                <div class="line-bottom2" v-for="comment in item.comments" :key="comment._id">
+                  <div class="line-bottom">
+                    <h4>
+                      <b>Answer:</b>
+                    </h4>
+                    {{comment.text}}
+                  </div>
+                  <div class="postion-text">
+                    <h6 class="color-date">
+                      <b>Answered On:</b>
+                      {{comment.createdAt}}
+                      <br>
+                      <b>Answered By:</b>
+                      {{comment.userId.firstname}} {{comment.userId.lastname}}
+                    </h6>
+                  </div>
                 </div>
               </div>
-            </div>
-          </span>
+            </span>
+          </div>
         </div>
       </div>
 
@@ -96,6 +99,7 @@ export default {
     return {
       token_key: localStorage.getItem("token"),
       loading: true,
+      question_id: this.$route.params.id,
       items: []
     };
   },
@@ -112,7 +116,10 @@ export default {
       }
     },
     read() {
-      fetch("http://localhost:3000/api/questions/" + this.$route.params.id)
+      const urlvar =
+        "http://localhost:3000/api/questions/" + this.$route.params.id;
+      console.log(urlvar);
+      fetch(urlvar)
         .then(response => {
           return response.json();
         })
@@ -132,7 +139,7 @@ export default {
             };
           });
           this.items = questions;
-          console.log(questions);
+          console.log(data);
           this.loading = false;
         });
     },

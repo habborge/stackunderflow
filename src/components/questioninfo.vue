@@ -3,21 +3,23 @@
     <div class="row">
       <div class="col-sm">
         <div class="card-body" v-for="item in items" :key="item._id">
-          <div class="line-bottom">
-            <span>
-              <h6 class="card-subtitle mb-2">
-                <b>QUESTION</b>
-                <br>
-                <span class="color-date">
-                  <b>Asked:</b>
-                  {{item.createdAt}}
+          <div v-if="question_id == item._id">
+            <div class="line-bottom">
+              <span>
+                <h6 class="card-subtitle mb-2">
+                  <b>QUESTION</b>
                   <br>
-                  <b>Author:</b>
-                  {{item.author}}
-                </span>
-              </h6>
-              <h1 class="card-title">{{item.question}}</h1>
-            </span>
+                  <span class="color-date">
+                    <b>Asked:</b>
+                    {{item.createdAt}}
+                    <br>
+                    <b>Author:</b>
+                    {{item.author}}
+                  </span>
+                </h6>
+                <h1 class="card-title">{{item.question}}</h1>
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -67,6 +69,7 @@ export default {
   data() {
     return {
       loading: true,
+      question_id: this.$route.params.id,
       items: []
     };
   },
