@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <child @eventtriggered="performAction"></child>
     <div id="image_logo">
       <img src="http://globalex.dot5hosting.com/designware/taskware.png" class="card-img-top">
     </div>
@@ -47,15 +48,20 @@
 </template>
 
 <script>
+import child from "./components/white";
 export default {
   name: "app",
   props: {
     msg: String,
     tokem_key: String
   },
+  components: {
+    child: child
+  },
   data() {
     return {
-      token_key: localStorage.getItem("token")
+      token_key: localStorage.getItem("token"),
+      accion: "nada"
     };
   },
   methods: {
@@ -66,6 +72,9 @@ export default {
       this.$router.push({ path: "/login" });
 
       //this.router.push("http://localhost:8080/#/");
+    },
+    performAction() {
+      this.accion = "accion";
     }
   },
   computed: {}

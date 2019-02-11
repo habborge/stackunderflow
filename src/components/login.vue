@@ -67,6 +67,9 @@ export default {
           this.items = data;
           localStorage.setItem("token", data.meta.token);
           localStorage.setItem("myUser", data.item._id);
+          this.$emit("eventtriggered", {
+            status: 0
+          });
           this.$router.push({ path: "/" });
         });
     }
