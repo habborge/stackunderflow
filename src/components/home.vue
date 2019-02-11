@@ -10,47 +10,51 @@
             <h3>QUESTION</h3>
           </div>
           <div class="post__container">
-            <div class="card-body" v-for="item in items" :key="item._id">
-              <div>
-                <div class="row">
-                  <div class="col-sm-8">
-                    <h5 class="card-title">Question</h5>
-                    <h6 class="card-subtitle mb-2">
-                      <b>Created at:</b>
-                      {{item.createdAt}}
-                    </h6>
-                    <p class="card-text">
-                      <b>Description:</b>
-                      {{item.question}}
-                      <br>
-                      <b>Author:</b>
-                      {{item.author}}
-                    </p>
-                  </div>
+            <div class="card line-bottom" v-for="item in items" :key="item._id">
+              <div class="card-body">
+                <div>
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <h5 class="card-title">Question</h5>
+                      <h6 class="card-subtitle mb-2">
+                        <b>Created at:</b>
+                        {{item.createdAt}}
+                      </h6>
+                      <p class="card-text">
+                        <b>Description:</b>
+                        {{item.question}}
+                        <br>
+                        <b>Author:</b>
+                        {{item.author}}
+                      </p>
+                    </div>
 
-                  <div class="col-sm-4">
-                    <div v-if="myId == item.authorId">
-                      <div class="row">
-                        <div class="col-sm-6">
-                          <router-link
-                            v-bind:to="'/questioninfo/'+item._id"
-                            class="btn btn-success"
-                          >Update</router-link>
-                        </div>
-                        <div class="col-sm-6">
-                          <router-link
-                            v-bind:to="'/deletequestion/'+item._id"
-                            class="btn btn-danger"
-                          >Delete</router-link>
+                    <div class="col-sm-4">
+                      <div v-if="myId == item.authorId">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <router-link
+                              v-bind:to="'/questioninfo/'+item._id"
+                              class="btn btn-success"
+                            >Update</router-link>
+                          </div>
+                          <div class="col-sm-6">
+                            <router-link
+                              v-bind:to="'/deletequestion/'+item._id"
+                              class="btn btn-danger"
+                            >Delete</router-link>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div v-if="token_key">
-                    <router-link v-bind:to="'/answers/'+item._id" class="btn btn-primary">Answer</router-link>
-                  </div>
-                  <div v-else>
-                    <router-link to="/login" class="btn btn-primary">Answer</router-link>
+                    <div class="boton-line">
+                      <div v-if="token_key">
+                        <router-link v-bind:to="'/answers/'+item._id" class="btn btn-primary">Answer</router-link>
+                      </div>
+                      <div v-else>
+                        <router-link to="/login" class="btn btn-primary">Answer</router-link>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -136,7 +140,7 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  color: #ffffff;
 }
 .info_text {
   text-align: left;
@@ -146,5 +150,12 @@ a {
 }
 .texto {
   font-size: 14px;
+}
+.boton-line {
+  padding-top: 10px;
+  padding-left: 10px;
+}
+.line-bottom {
+  margin-bottom: 5px;
 }
 </style>

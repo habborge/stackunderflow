@@ -3,7 +3,7 @@
     <div class="row">
       <div class="ancho" v-if="items">
         <div class="alert alert-success" role="alert">{{items}}</div>
-        <router-link to="/" class="btn btn-primary">Go to Log in</router-link>
+        <router-link to="/login" class="btn btn-primary">Go to Log in</router-link>
         <router-link to="/" class="btn btn-success">Back to Questions</router-link>
       </div>
       <div class="login-width">

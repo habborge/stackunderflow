@@ -6,17 +6,35 @@
     <div id="app-text">
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">TW</a>
-
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <router-link to="/" class="nav-item nav-link">Home</router-link>
-            <div v-if="token_key">
-              <router-link to="/newquestion" class="nav-item nav-link">New Question</router-link>
-              <a class="nav-item nav-link mouse-hand" @click="logout">Log Out</a>
+
+            <div class="alineacion">
+              <router-link to="/newquestion" class="nav-item nav-link" v-if="token_key">New Question</router-link>
             </div>
-            <div v-else>
-              <router-link to="/login" class="nav-item nav-link">Login</router-link>
-              <router-link to="/signup" class="nav-item nav-link">Sign Up</router-link>
+            <div
+              class="nav-item nav-link mouse-hand alineacion"
+              @click="logout"
+              v-if="token_key"
+            >Log Out</div>
+
+            <div class="alineacion">
+              <router-link to="/login" class="nav-item nav-link" v-if="!token_key">Login</router-link>
+            </div>
+            <div class="alineacion">
+              <router-link to="/signup" class="nav-item nav-link" v-if="!token_key">Sign Up</router-link>
             </div>
           </div>
         </div>
@@ -44,10 +62,13 @@ export default {
     logout() {
       localStorage.removeItem("myUser");
       localStorage.removeItem("token");
+      this.token_key = "";
       this.$router.push({ path: "/login" });
+
       //this.router.push("http://localhost:8080/#/");
     }
-  }
+  },
+  computed: {}
 };
 </script>
 
@@ -69,8 +90,13 @@ export default {
 }
 #app_second {
   padding: 25px;
+  margin-left: 50px;
+  max-width: 900px;
 }
 .mouse-hand {
   cursor: pointer;
+}
+.alineacion {
+  float: left;
 }
 </style>
