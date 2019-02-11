@@ -48,12 +48,7 @@
                       </div>
                     </div>
                     <div class="boton-line">
-                      <div v-if="token_key">
-                        <router-link v-bind:to="'/answers/'+item._id" class="btn btn-primary">Answer</router-link>
-                      </div>
-                      <div v-else>
-                        <router-link to="/login" class="btn btn-primary">Answer</router-link>
-                      </div>
+                      <router-link v-bind:to="'/answers/'+item._id" class="btn btn-primary">Answer</router-link>
                     </div>
                   </div>
                 </div>

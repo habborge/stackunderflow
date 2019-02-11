@@ -45,7 +45,7 @@
 
       <div class="container">
         <div class="row">
-          <div class="text-area">
+          <div class="text-area" v-if="token_key">
             <div>
               <h1>Add your Answer</h1>
             </div>
@@ -60,6 +60,9 @@
               </div>
               <button type="button" class="btn btn-primary" @click="validate">Create Answer</button>
             </form>
+          </div>
+          <div v-else class="move-line">
+            <router-link to="/login" class="btn btn-primary text-color">Log in first before answer</router-link>
           </div>
         </div>
       </div>
@@ -91,6 +94,7 @@ export default {
   },
   data() {
     return {
+      token_key: localStorage.getItem("token"),
       loading: true,
       items: []
     };
@@ -184,6 +188,9 @@ a {
 .text-title {
   text-align: center;
 }
+.text-color {
+  color: aliceblue;
+}
 .texto {
   font-size: 14px;
 }
@@ -209,5 +216,8 @@ a {
   width: 100%;
   border-top: 1px solid rgb(156, 156, 156);
   padding-top: 10px;
+}
+.move-line {
+  padding-left: 20px;
 }
 </style>
