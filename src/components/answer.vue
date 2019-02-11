@@ -1,7 +1,6 @@
 <template>
   <div class="post__container">
     <div class="row">
-      {{items}}
       <div class="card-body" v-for="item in items" :key="item._id">
         <div v-if="question_id == item._id">
           <div class="line-bottom">
